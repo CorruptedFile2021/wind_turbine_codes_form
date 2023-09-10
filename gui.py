@@ -14,17 +14,20 @@ class main():
                                                 destinations=[
 
                                                     ft.NavigationRailDestination(icon=ft.icons.HOME_ROUNDED,label="Home",padding=10,),
+
                                                     ft.NavigationRailDestination(icon=ft.icons.QUESTION_ANSWER,label="Information",padding=10),
                                                     ft.NavigationRailDestination(icon=ft.icons.QUESTION_MARK,label="How it Works",padding=10),
                                                     ft.NavigationRailDestination(icon=ft.icons.PEOPLE_ROUNDED,label="Contributors",padding=10),
 
                                                 ],width=200,group_alignment=0.0,on_change=self.ChangeTabs,leading=ft.Image(src=f"/img/transparent.png",width=75,height=75))
+
                             
         self.Text = ft.Text(value="Description",style=ft.TextThemeStyle.TITLE_LARGE,text_align=ft.TextAlign.CENTER,)
         self.InfoText = [ft.Text(value="Information",style=ft.TextThemeStyle.DISPLAY_LARGE,text_align=ft.TextAlign.CENTER),
                             self.Text,
                             ft.ElevatedButton(text="Placeholder Button")]
         self.streamView = ft.Row(
+
             [
                 self.NavigationRail,
                 ft.VerticalDivider(width=1),
@@ -73,12 +76,15 @@ class main():
 
                             ],alignment=ft.MainAxisAlignment.CENTER,),margin=ft.margin.only(left=700),),
                             
+
                             
                         ])
                         
                     ],alignment=ft.MainAxisAlignment.CENTER)
+
                 ], alignment=ft.MainAxisAlignment.CENTER, expand=True),image_src="home.jpg",image_fit=ft.ImageFit.FILL,image_opacity=0.4,width=2300),
                 
+
 
 
             ],
@@ -246,6 +252,150 @@ class main():
             self.page.update()
 
 
+        
+    def ChangeThemes(self,e):
+        self.page.theme_mode = (
+            ft.ThemeMode.DARK
+            if self.page.theme_mode == ft.ThemeMode.LIGHT
+            else ft.ThemeMode.LIGHT
+        )
+
+
+            
+        
+    def ChangeTabs(self,e):
+        if self.NavigationRail.selected_index == 0:
+            self.page.controls.clear()
+            
+            self.page.add(
+            ft.Row(
+            [
+                self.NavigationRail,
+                ft.VerticalDivider(width=1),
+                ft.Column(controls=[
+                    ft.Row(controls=[
+                        ft.Column(controls=[
+                            ft.Text(value="Windmill Project",style=ft.TextThemeStyle.DISPLAY_LARGE,text_align=ft.TextAlign.CENTER),
+                            ft.Text(value='Made by "Science-AI Symbiotic Group, SSAN"',style=ft.TextThemeStyle.TITLE_LARGE,text_align=ft.TextAlign.CENTER),
+                            ft.Column(controls=[
+                                ft.Switch(label="Change Theme",label_position=ft.LabelPosition.LEFT,value=True,on_change=self.ChangeThemes,)
+
+                            ],alignment=ft.MainAxisAlignment.CENTER,),
+                            
+                        ])
+                        
+                    ],alignment=ft.MainAxisAlignment.CENTER)
+                ], alignment=ft.MainAxisAlignment.CENTER, expand=True),
+
+
+            ],
+            expand=True,
+        )
+            )
+            
+            
+            self.page.update()
+
+        elif self.NavigationRail.selected_index == 1:
+            self.page.controls.clear()
+            
+            self.page.add(
+            self.streamView,
+            )
+            
+            print("Started Thread")
+            try:
+                self.BackgroundThread = Process(target=gui_test.main,args=(self.SharedVariable,))
+                self.BackgroundThread.start()
+                self.BackgroundThread.join()
+                self.BackgroundThread = None
+            except:
+                print("An error was Given")
+
+
+            print(self.SharedVariable.value)
+            self.Text.value = f"Randomly Generated Number in Thread: {self.SharedVariable.value}"
+            self.page.update()
+
+        elif self.NavigationRail.selected_index == 2:
+            self.page.controls.clear()
+            
+            self.page.add(
+            ft.Row(
+            [
+                self.NavigationRail,
+                ft.VerticalDivider(width=1),
+                ft.Column(controls=[
+                    ft.Row(controls=[
+                        ft.Column(controls=[
+                            ft.Text(value="How it Works",style=ft.TextThemeStyle.DISPLAY_LARGE,text_align=ft.TextAlign.CENTER),
+                            ft.Text(value="Description",style=ft.TextThemeStyle.TITLE_LARGE,text_align=ft.TextAlign.CENTER),
+
+                        ])
+                        
+                    ],alignment=ft.MainAxisAlignment.CENTER)
+                ], alignment=ft.MainAxisAlignment.CENTER, expand=True),
+            ],
+            expand=True,
+            )
+            )
+            
+            
+            self.page.update()
+        
+        elif self.NavigationRail.selected_index == 3:
+            self.page.controls.clear()
+            
+            self.page.add(
+            ft.Row(
+            [
+                self.NavigationRail,
+                ft.VerticalDivider(width=1),
+                ft.Column(controls=[
+                    ft.Row(controls=[
+                        ft.Column(controls=[
+                            ft.Text(value="Contributors",style=ft.TextThemeStyle.DISPLAY_LARGE,text_align=ft.TextAlign.CENTER),
+                            ft.Row(controls=[
+                                ft.Card(
+                                        content=ft.Container(
+                                            content=ft.Column(
+                                                        [
+                                                            ft.ListTile(
+                                                                leading=ft.Icon(ft.icons.PERSON_2),
+                                                                title=ft.Text("Student Name"),
+                                                                subtitle=ft.Text("Class"),
+                                                            ),
+                                                            ft.ListTile(
+                                                                leading=ft.Icon(ft.icons.PERSON_2),
+                                                                title=ft.Text("Student Name"),
+                                                                subtitle=ft.Text("Class"),
+                                                                
+                                                            ),
+
+                                                            
+                                                        ]                       
+                                                            ),
+                                                width=800,
+                                                alignment=ft.alignment.center,
+                                                padding=10,
+                                    
+                                                        )
+        )
+                        
+
+                            ],alignment=ft.alignment.center)
+                            
+                        ])
+                        
+                    ],alignment=ft.MainAxisAlignment.CENTER)
+                ], alignment=ft.MainAxisAlignment.CENTER, expand=True),
+            ],
+            expand=True,
+            )
+            )
+            
+            
+            self.page.update()
         
     def ChangeThemes(self,e):
         self.page.theme_mode = (

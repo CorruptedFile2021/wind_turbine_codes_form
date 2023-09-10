@@ -1,13 +1,8 @@
 from __future__ import print_function # Python 2/3 compatibility
 import cv2 # Import the OpenCV library
 import numpy as np # Import Numpy library
- 
-# Project: Object Tracking
-# Author: Addison Sears-Collins 
-# Website: https://automaticaddison.com
-# Date created: 06/13/2020
-# Python version: 3.7
- 
+import matplotlib.pyplot as plt
+
 def main():
     """
     Main method of the program.
@@ -19,12 +14,12 @@ def main():
     # Create the background subtractor object
     # Use the last 700 video frames to build the background
     back_sub = cv2.createBackgroundSubtractorMOG2(history=700, 
-        varThreshold=25, detectShadows=True)
+        varThreshold=100, detectShadows=True)
  
     # Create kernel for morphological operation
     # You can tweak the dimensions of the kernel
     # e.g. instead of 20,20 you can try 30,30.
-    kernel = np.ones((20,20),np.uint8)
+    kernel = np.ones((2,2),np.uint8)
     XARRAY=[]
     YARRAY=[]
     while(True):
@@ -106,3 +101,17 @@ def main():
 if __name__ == '__main__':
     print(__doc__)
     XARRAY, YARRAY=main()
+
+    plt.figure(figsize=(7,11))
+    plt.subplot(2,1,1)
+    plt.xlabel('Time interval')
+    plt.ylabel('Magnitude of Y position')
+    plt.title('Wind Turbine blade movement over time')
+    plt.plot(YARRAY)
+
+    plt.subplot(2,1,2)
+    plt.xlabel('Time interval')
+    plt.ylabel('Magnitude of X position')
+    plt.title('Wind Turbine blade movement over time')
+    plt.plot(XARRAY)
+    print('Simulation complete')
